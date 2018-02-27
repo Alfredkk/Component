@@ -1,0 +1,107 @@
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <style>
+  body {
+   font-family: Verdana;
+  }
+  h1, h2, h3 {
+   color: darkblue;
+  }
+  .rating-circle {
+   height: 2em;
+   width: 2em;
+   border: .1em solid black;
+   border-radius: 1.1em;
+   display: inline-block;
+   margin: 0;
+   padding: .1em;
+  }
+
+  .rating-hover {
+   background-color: yellow;
+  }
+
+  .rating-chosen {
+   background-color: green;
+  }
+ </style>
+</head>
+<body>
+ <h1>Contoso Web Developer Conference</h1>
+ <h2>Finding elements using jQuery</h2>
+ <div>This session is about identifying elements using jQuery methods and selectors.</div>
+ <h3>Rate this session</h3>
+ <div id="rating-container">
+  <div class="rating-circle"></div>
+  <div class="rating-circle"></div>
+  <div class="rating-circle"></div>
+  <div class="rating-circle"></div>
+  <div class="rating-circle"></div>
+ </div>
+
+ <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+
+ <script>
+//	 $(document).ready(function(){
+//		$('.rating-circle').on('click', function(){
+//			$(this).siblings().removeClass('rating-chosen');
+//			$(this).addClass('rating-chosen').prevAll().addClass('rating-chosen')
+//		}).hover(function(){
+//			$('.rating-circle').attr('style','background-color: initial');
+//			$(this).addClass('rating-hover').prevAll().addClass('rating-hover');
+//			$('.rating-hover').attr('style','background-color: yellow');
+//		}).mouseleave(function(){
+//			$('.rating-chosen').attr("style",'background-color: green');
+//			$('#rating-container').children().removeClass('rating-hover');
+//		});
+//	 });
+	 
+//	 $(".rating-circle").hover(
+//		 function(){
+//			 $(this).addClass("rating-hover");
+//			 $(this).prevAll().addClass("rating-hover");
+//		 },
+//		 function(){
+//			 $(this).removeClass("rating-hover");
+//			 $(this).prevAll().removeClass("rating-hover");
+//		 });
+//	 $('.rating-circle').click(function () {
+//		 $(this).addClass('rating-chosen');
+//		 $(this).prevAll().addClass('rating-chosen');
+//	 });
+//	 $('.rating-circle').click(function () {
+//		 $(this).nextAll().removeClass('rating-chosen');
+//	 });
+	 
+	 var rating =-1;
+	 $(function (){
+		 $('#rating-container').children().click(function(){
+			 $(this).prevAll().addClass('rating-chosen');
+			 $(this).addClass('rating-chosen');
+			 $(this).nextAll().removeClass('rating-chosen');
+			 rating = $(this).index();
+		 })
+		 $('#rating-container').children().hover( function(){
+			 $(this).prevAll().removeClass('rating-chosen');
+			 $(this).removeClass('rating-chosen');
+			 $(this).nextAll().removeClass('rating-chosen');
+			 $(this).prevAll().addClass('rating-hover');
+			 $(this).addClass('rating-hover');
+		 })
+		 
+		 $('#rating-container').children().mouseout(function(){ 
+			 if(rating!=-1){
+				 //alert(rating);
+				 var id = $('#rating-container').children().get(rating);
+				 $(id).prevAll().addClass('rating-chosen');
+				 $(id).addClass('rating-chosen');
+			 }
+			 $(this).prevAll().removeClass('rating-hover');
+			 $(this).removeClass('rating-hover');
+		 })
+	 })
+
+ </script>
+</body>
+</html>
